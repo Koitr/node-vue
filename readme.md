@@ -1,19 +1,27 @@
-# admin 文件夹为后台管理系统
+### **_admin 文件夹为后台管理系统_**
 
-# server 文件夹为服务端
+---
 
-# 把系统 clone 下来 然后 （请先安装最新版的 mogoose）
+### **_server 文件夹为服务端_**
 
-cd admin
+---
 
-# npm install
+### 把系统 clone 下来 然后 （请先安装最新版的 mogoose）
 
-# npm run serve
+### cd admin
 
-cd server
+#### npm install
 
-# npm install
+#### npm run serve
 
-# npm run server
+---
 
-# web 页面暂未开发敬请期待
+### cd server
+
+#### npm install
+
+#### npm run server
+
+---
+
+### web 页面暂未开发敬请期待
