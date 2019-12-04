@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 import Main from '../views/Main.vue'
 import CategorieEdit from '../views/categorieEdit.vue'
 import CategorieList from '../views/categorieList.vue'
+
+import ItemEdit from '../views/ItemEdit.vue'
+import ItemList from '../views/ItemList.vue'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -20,6 +23,18 @@ const routes = [{
   }, {
     path: '/categories/edit/:id',
     component: CategorieEdit,
+    props: true
+  }, {
+    path: '/items/create',
+    name: 'itemEdit',
+    component: ItemEdit
+  }, {
+    path: '/items/list',
+    name: 'categorieList',
+    component: ItemList
+  }, {
+    path: '/items/edit/:id',
+    component: ItemEdit,
     props: true
   }]
 }]
