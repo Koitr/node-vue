@@ -16,6 +16,31 @@
       <el-form-item label="名称">
         <el-input v-model="model.name"></el-input>
       </el-form-item>
+      <el-form-item label="称号">
+        <el-input v-model="model.title"></el-input>
+      </el-form-item>
+      <el-form-item label="类型">
+        <el-select v-model="model.categories" multiple>
+          <el-option
+            v-for="item of categories"
+            :key="item._id"
+            :label="item.name"
+            :value="item._id"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="难度">
+        <el-rate style="margin-top:0.6rem" :max="9" show-score v-model="model.scores.difficult"></el-rate>
+      </el-form-item>
+      <el-form-item label="技能">
+        <el-rate style="margin-top:0.6rem" :max="9" show-score v-model="model.scores.skill"></el-rate>
+      </el-form-item>
+      <el-form-item label="攻击">
+        <el-rate style="margin-top:0.6rem" :max="9" show-score v-model="model.scores.attack"></el-rate>
+      </el-form-item>
+      <el-form-item label="生存">
+        <el-rate style="margin-top:0.6rem" :max="9" show-score v-model="model.scores.survive"></el-rate>
+      </el-form-item>
       <el-form-item label="头像">
         <el-upload
           class="avatar-uploader"
@@ -41,13 +66,19 @@ export default {
   },
   data() {
     return {
-      model: {},
+      categories: [],
+      model: {
+        scores: {
+          difficult: 0
+        }
+      },
       parents: []
     };
   },
   //生命周期 - 创建完成（访问当前this实例）
   created() {
     this.id && this.fetch();
+    this.fetchCategories();
   },
   //生命周期 - 挂载完成（访问DOM元素）
   mounted() {},
@@ -71,7 +102,12 @@ export default {
     },
     async fetch() {
       const res = await this.$http.get(`rest/heroes/${this.id}`);
-      this.model = res.data;
+      // this.model = res.data;
+      this.model = Object.assign({}, this.model, res.data);
+    },
+    async fetchCategories() {
+      const res = await this.$http.get(`rest/categories`);
+      this.categories = res.data;
     }
   }
 };
