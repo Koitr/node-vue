@@ -6,8 +6,8 @@
       <el-form-item label="名称">
         <el-input v-model="model.name"></el-input>
       </el-form-item>
-      <el-form-item label="广告"
-        ><el-button type="text" @click="model.items.push({})">
+      <el-form-item label="广告">
+        <el-button type="text" @click="model.items.push({})">
           <i class="el-icon-plus"></i> 添加广告
         </el-button>
         <el-row type="flex" style="flex-wrap:wrap">
@@ -18,8 +18,9 @@
             <el-form-item label="图片" style="margin-top:0.5rem">
               <el-upload
                 class="avatar-uploader"
-                :action="$http.defaults.baseURL + '/upload'"
+                :action="uploadUrl"
                 :show-file-list="false"
+                :headers="getAuthHeaders()"
                 :on-success="res => $set(item, 'image', res.url)"
               >
                 <img v-if="item.image" :src="item.image" class="avatar" />
@@ -36,8 +37,8 @@
               >
             </el-form-item>
           </el-col>
-        </el-row></el-form-item
-      >
+        </el-row>
+      </el-form-item>
 
       <el-form-item>
         <el-button class="primary" native-type="submit">保存</el-button>
@@ -62,14 +63,15 @@ export default {
       categories: []
     };
   },
-  //生命周期 - 创建完成（访问当前this实例）
+  // 生命周期 - 创建完成（访问当前this实例）
   created() {
     this.id && this.fetch();
   },
-  //生命周期 - 挂载完成（访问DOM元素）
+  // 生命周期 - 挂载完成（访问DOM元素）
   mounted() {},
   methods: {
     async save() {
+      // eslint-disable-next-line no-unused-vars
       let res;
       if (this.id) {
         res = await this.$http.put(`rest/ads/${this.id}`, this.model);

@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div>
-    <h1>{{id?'编辑' :'新建'}}英雄</h1>
+    <h1>{{ id ? "编辑" : "新建" }}英雄</h1>
     <el-form label-width="120px" @submit.native.prevent="save">
       <el-tabs type="border-card" value="skills">
         <el-tab-pane label="基本信息">
@@ -14,9 +14,10 @@
           <el-form-item label="头像">
             <el-upload
               class="avatar-uploader"
-              :action="$http.defaults.baseURL+'/upload'"
+              :action="uploadUrl"
               :show-file-list="false"
               :on-success="afterUpload"
+              :headers="getAuthHeaders()"
             >
               <img v-if="model.avatar" :src="model.avatar" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -33,25 +34,55 @@
             </el-select>
           </el-form-item>
           <el-form-item label="难度">
-            <el-rate style="margin-top:0.6rem" :max="9" show-score v-model="model.scores.difficult"></el-rate>
+            <el-rate
+              style="margin-top:0.6rem"
+              :max="9"
+              show-score
+              v-model="model.scores.difficult"
+            ></el-rate>
           </el-form-item>
           <el-form-item label="技能">
-            <el-rate style="margin-top:0.6rem" :max="9" show-score v-model="model.scores.skill"></el-rate>
+            <el-rate
+              style="margin-top:0.6rem"
+              :max="9"
+              show-score
+              v-model="model.scores.skill"
+            ></el-rate>
           </el-form-item>
           <el-form-item label="攻击">
-            <el-rate style="margin-top:0.6rem" :max="9" show-score v-model="model.scores.attack"></el-rate>
+            <el-rate
+              style="margin-top:0.6rem"
+              :max="9"
+              show-score
+              v-model="model.scores.attack"
+            ></el-rate>
           </el-form-item>
           <el-form-item label="生存">
-            <el-rate style="margin-top:0.6rem" :max="9" show-score v-model="model.scores.survive"></el-rate>
+            <el-rate
+              style="margin-top:0.6rem"
+              :max="9"
+              show-score
+              v-model="model.scores.survive"
+            ></el-rate>
           </el-form-item>
           <el-form-item label="逆风出装">
             <el-select v-model="model.items1" multiple>
-              <el-option v-for="item of items" :key="item._id" :label="item.name" :value="item._id"></el-option>
+              <el-option
+                v-for="item of items"
+                :key="item._id"
+                :label="item.name"
+                :value="item._id"
+              ></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="顺风出装">
             <el-select v-model="model.items2" multiple>
-              <el-option v-for="item of items" :key="item._id" :label="item.name" :value="item._id"></el-option>
+              <el-option
+                v-for="item of items"
+                :key="item._id"
+                :label="item.name"
+                :value="item._id"
+              ></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="使用技巧">
@@ -70,16 +101,17 @@
             <i class="el-icon-plus"></i> 添加技能
           </el-button>
           <el-row type="flex" style="flex-wrap:wrap">
-            <el-col :md="12" v-for="(item,index) in model.skills" :key="index">
+            <el-col :md="12" v-for="(item, index) in model.skills" :key="index">
               <el-form-item label="名称">
                 <el-input v-model="item.name"></el-input>
               </el-form-item>
               <el-form-item label="图标">
                 <el-upload
                   class="avatar-uploader"
-                  :action="$http.defaults.baseURL+'/upload'"
+                  :action="uploadUrl"
                   :show-file-list="false"
-                  :on-success="res =>$set(item,'icon',res.url)"
+                  :on-success="res => $set(item, 'icon', res.url)"
+                  :headers="getAuthHeaders()"
                 >
                   <img v-if="item.icon" :src="item.icon" class="avatar" />
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -92,7 +124,12 @@
                 <el-input type="textarea" v-model="item.tips"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button size="small" type="dargon" @click="model.skills.splice(index,1)">删除</el-button>
+                <el-button
+                  size="small"
+                  type="dargon"
+                  @click="model.skills.splice(index, 1)"
+                  >删除</el-button
+                >
               </el-form-item>
             </el-col>
           </el-row>
@@ -165,6 +202,4 @@ export default {
   }
 };
 </script>
-<style>
-
-</style>
+<style></style>

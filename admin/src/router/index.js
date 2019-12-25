@@ -120,7 +120,10 @@ const routes = [{
 }, {
   path: "/login",
   name: 'login',
-  component: Login
+  component: Login,
+  meta: {
+    isPublic: true
+  }
 }];
 
 const router = new VueRouter({
@@ -128,5 +131,12 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 });
+
+router.beforeEach((to, from, next) => {
+  if (!to.meta.isPublic && !localStorage.token) {
+    return next('/login')
+  }
+  next();
+})
 
 export default router;
