@@ -28,4 +28,8 @@
 
 ---
 
-### web 页面暂未开发敬请期待
+### cd web
+
+#### npm install
+
+#### npm run serve
